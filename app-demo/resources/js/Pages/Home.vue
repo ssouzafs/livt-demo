@@ -1,6 +1,6 @@
 <template>
   <NavBar/>
-  <h1 class="text-3xl font-bold underline">
+  <h1 class="text-3xl font-bold underline bg-brand-500">
     Hello world!
   </h1>
 </template>
