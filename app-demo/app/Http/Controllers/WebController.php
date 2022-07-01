@@ -14,7 +14,7 @@ class WebController extends Controller
      */
     public function home()
     {
-        return Inertia::render('Home');
+        return Inertia::render('Home', ['username' => 'Sergio']);
     }
 
     /**
@@ -22,7 +22,9 @@ class WebController extends Controller
      */
     public function users()
     {
-        return Inertia::render('Users');
+        return Inertia::render('Users', [
+            'time' => now()->toTimeString(),
+        ]);
     }
 
     /**

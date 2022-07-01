@@ -1,14 +1,27 @@
 <template>
-  <NavBar />
-  <h2>Users</h2>
+  <Layout>
+    <h1>
+      Users
+    </h1>
+  </Layout>
+
+  <div style="margin-top: 700px;">
+    <p>Tempo Atual: {{ time }}</p>
+
+    <Link href="/users" preserve-scroll>Refresh</Link>
+  </div>
 </template>
 
 <script>
-import NavBar from "../Shareds/NavBar";
+import Layout from "../Shareds/Layout";
+
 export default {
-    name: "Users",
+  name: "Users",
+  props: {
+    time: String,
+  },
   components: {
-      NavBar
+    Layout
   }
 }
 </script>

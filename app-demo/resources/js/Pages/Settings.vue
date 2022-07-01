@@ -1,14 +1,17 @@
 <template>
-  <NavBar/>
-  <h2 class="brand-500 p-3">Settings</h2>
+  <Layout>
+    <h1>
+      Settings
+    </h1>
+  </Layout>
 </template>
 
 <script>
-import NavBar from "../Shareds/NavBar";
+import Layout from "../Shareds/Layout";
 
 export default {
   name: "Settings",
-  components: {NavBar}
+  components: {Layout}
 }
 </script>
 

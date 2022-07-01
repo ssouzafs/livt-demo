@@ -1,43 +1,28 @@
 <template>
-  <nav >
-    <ul>
+  <nav>
+    <ul class="flex space-x-4 list-inside">
       <li>
-        <Link class="text-3xl font-bold underline" href="/">Home</Link>
+        <NavLink href="/" :active="$page.component === 'Home'">Home</NavLink>
       </li>
       <li>
-        <Link href="/users">Users</Link>
+        <NavLink href="/users" :active="$page.component === 'Users'">Users</NavLink>
       </li>
       <li>
-        <Link href="/settings">Settings</Link>
+        <NavLink href="/settings" :active="$page.component === 'Settings'">Settings</NavLink>
       </li>
     </ul>
   </nav>
 </template>
 
 <script>
-import {Link} from '@inertiajs/inertia-vue3';
+import NavLink from "./NavLink";
 
 export default {
   name: "NavBar",
-
   components: {
-    Link
+    NavLink
   }
 }
 </script>
 <style scoped>
-/*nav ul{*/
-/*  display: flex;*/
-/*  background-color: #1f1e1e;*/
-/*  padding: 15px;*/
-/*  color: #FFF;*/
-/*}*/
-
-/*nav ul li  {*/
-/*  padding: 10px;*/
-/*}*/
-
-/*nav ul li a:hover {*/
-/*  text-decoration: underline;*/
-/*}*/
 </style>
