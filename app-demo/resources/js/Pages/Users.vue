@@ -1,9 +1,7 @@
 <template>
-  <Layout>
-    <h1>
-      Users
-    </h1>
-  </Layout>
+  <h1>
+    Users
+  </h1>
 
   <div style="margin-top: 700px;">
     <p>Tempo Atual: {{ time }}</p>
@@ -20,9 +18,7 @@ export default {
   props: {
     time: String,
   },
-  components: {
-    Layout
-  }
+  layout: Layout
 }
 </script>
 

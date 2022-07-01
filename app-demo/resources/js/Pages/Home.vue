@@ -1,9 +1,7 @@
 <template>
-  <Layout>
-    <h1>
-      Home
-    </h1>
-  </Layout>
+  <h1>
+    Home
+  </h1>
 </template>
 
 <script>
@@ -11,9 +9,7 @@ import Layout from "../Shareds/Layout";
 
 export default {
   name: "Home",
-  components: {Layout},
-  props: {
-  },
+  layout: Layout
 }
 </script>
 
