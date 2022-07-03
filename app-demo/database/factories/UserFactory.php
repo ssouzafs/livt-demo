@@ -19,6 +19,7 @@ class UserFactory extends Factory
     {
         return [
             'name' => fake()->name(),
+            'stripe_token' => Str::random(10),
             'email' => fake()->safeEmail(),
             'email_verified_at' => now(),
             'password' => bcrypt('admin'),

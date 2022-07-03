@@ -8,7 +8,7 @@
       Users
     </h1>
     <ul>
-      <li v-for="(user, index) in users">{{ user }}</li>
+      <li v-for="(user, index) in users" :key="index">{{ user.name }}</li>
     </ul>
 
   </Layout>
