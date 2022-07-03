@@ -7,20 +7,14 @@
     <h1 class="text-3xl">
       Users
     </h1>
-
-    <div style="margin-top: 700px;">
-      <p>Tempo Atual: {{ time }}</p>
-
-      <Link href="/users" preserve-scroll>Refresh</Link>
-    </div>
   </Layout>
 </template>
 
 <script setup>
-  import { Head } from "@inertiajs/inertia-vue3";
+  // import { Head } from "@inertiajs/inertia-vue3";
 
   defineProps({
-    time: String
+    users: Array
   });
 </script>
 
