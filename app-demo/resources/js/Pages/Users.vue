@@ -7,12 +7,14 @@
     <h1 class="text-3xl">
       Users
     </h1>
+    <ul>
+      <li v-for="(user, index) in users">{{ user }}</li>
+    </ul>
+
   </Layout>
 </template>
 
 <script setup>
-  // import { Head } from "@inertiajs/inertia-vue3";
-
   defineProps({
     users: Array
   });
