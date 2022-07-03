@@ -1,27 +1,26 @@
 <template>
-  <h1>
-    Users
-  </h1>
+  <Layout>
+    <Head>
+      <title>Users</title>
+      <meta type="description" content="Information the my app" head-key="description" charset="CESU-8">
+    </Head>
+    <h1 class="text-3xl">
+      Users
+    </h1>
 
-  <div style="margin-top: 700px;">
-    <p>Tempo Atual: {{ time }}</p>
+    <div style="margin-top: 700px;">
+      <p>Tempo Atual: {{ time }}</p>
 
-    <Link href="/users" preserve-scroll>Refresh</Link>
-  </div>
+      <Link href="/users" preserve-scroll>Refresh</Link>
+    </div>
+  </Layout>
 </template>
 
-<script>
-import Layout from "../Shareds/Layout";
+<script setup>
+  import { Head } from "@inertiajs/inertia-vue3";
 
-export default {
-  name: "Users",
-  props: {
-    time: String,
-  },
-  layout: Layout
-}
+  defineProps({
+    time: String
+  });
 </script>
 
-<style scoped>
-
-</style>

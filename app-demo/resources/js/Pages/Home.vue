@@ -1,18 +1,13 @@
 <template>
-  <h1>
-    Home
-  </h1>
+  <Layout>
+    <Head title="Home" />
+    <h1 class='text-3xl'>
+      Home
+    </h1>
+  </Layout>
 </template>
 
-<script>
-import Layout from "../Shareds/Layout";
+<script setup>
+  import { Head } from '@inertiajs/inertia-vue3';
 
-export default {
-  name: "Home",
-  layout: Layout
-}
 </script>
-
-<style scoped>
-
-</style>

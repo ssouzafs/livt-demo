@@ -1,18 +1,16 @@
 <template>
-  <h1>
-    Settings
-  </h1>
+  <Head>
+    <title>Settings</title>
+  </Head>
+  <Layout>
+    <Head title="My App - Settings" />
+    <h1 class="text-3xl">
+      Settings
+    </h1>
+  </Layout>
 </template>
 
-<script>
-import Layout from "../Shareds/Layout";
+<script setup>
+  import { Head } from "@inertiajs/inertia-vue3";
 
-export default {
-  name: "Settings",
-  layout: Layout
-}
 </script>
-
-<style scoped>
-
-</style>
