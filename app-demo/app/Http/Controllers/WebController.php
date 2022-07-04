@@ -22,7 +22,8 @@ class WebController extends Controller
     public function users()
     {
         return Inertia::render('Users', [
-            'users' => User::all()->map(fn($user) => [
+            'users' => User::paginate(10)->through(fn($user) => [
+                'id' => $user->id,
                 'name' => $user->name,
                 'email' => $user->email,
                 'created_at' => $user->created_at->format('d/m/Y H:i')
