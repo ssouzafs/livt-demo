@@ -101,15 +101,18 @@
   import { Inertia } from "@inertiajs/inertia";
   import Paginator from "../Shareds/Paginator";
 
-  const search = ref("");
+  const search = ref(props.filters.search);
 
-  defineProps({ users: Object });
+  let props = defineProps({
+    users: Object,
+    filters: Object
+  });
 
   watch(search, (value) => {
     Inertia.get("/users", { search: value }, {
-      preserveState: true
+      preserveState: true,
+      replace: true
     });
-    console.log("Mudou: " + search.value);
   });
 </script>
 
