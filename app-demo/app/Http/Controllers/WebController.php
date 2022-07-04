@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreUserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -22,7 +23,7 @@ class WebController extends Controller
      */
     public function users(Request $request)
     {
-        return Inertia::render('Users', [
+        return Inertia::render('Users/Index', [
             'users' => User::query()
                 ->when($request->search, function ($query, $search) {
                     $query->where('name', 'like', "%{$search}%")
@@ -39,6 +40,27 @@ class WebController extends Controller
                 ]),
             'filters' => $request->only(['search'])
         ]);
+    }
+
+    /**
+     * @return Response
+     */
+    public function create()
+    {
+        return Inertia::render('Users/Create');
+    }
+
+    /**
+     * @param Request $request
+     * @return void
+     */
+    public function store(StoreUserRequest $request)
+    {
+        $user = new User();
+        $user->fill($request->validated());
+        $user->save();
+
+        return redirect()->route('web.users.create')->with('message', 'Cadastro realizado com sucesso!!!');
     }
 
     /**

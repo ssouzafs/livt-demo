@@ -11,7 +11,7 @@
     </header>
   </section>
   <section class="p-6">
-    <div class="max-w-7xl mx-auto ">
+    <div class="max-w-7xl mx-auto p-5 shadow-lg shadow-gray-500/30 rounded-md border">
       <slot />
     </div>
   </section>
@@ -23,7 +23,7 @@
   export default {
     name: "Layout",
     components: {
-      NavBar,
+      NavBar
     },
     computed: {
       username() {
