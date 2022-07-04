@@ -25,6 +25,7 @@
 
 <script setup>
   import { ref, watch } from "vue";
+  import _ from "lodash";
   import { Inertia } from "@inertiajs/inertia";
   import Paginator from "../Shareds/Paginator";
   import ListUsers from "../Shareds/ListUsers";
@@ -35,11 +36,11 @@
   });
   const search = ref(props.filters.search);
 
-  watch(search, (value) => {
-    Inertia.get("/users", { search: value }, {
+  watch(search, _.debounce(() => {
+    Inertia.get("/users", { search: search.value }, {
       preserveState: true,
       replace: true
     });
-  });
+  }, 400));
 </script>
 
