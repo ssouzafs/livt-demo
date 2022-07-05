@@ -11,6 +11,8 @@ Route::controller(WebController::class)->group(function () {
     Route::get('/users/create', 'create')->name('web.users.create');
     Route::post('/users/store', 'store')->name('web.users.store');
 
+    Route::get('/users/{id}/edit', 'edit')->name('web.users.edit');
+
     Route::get('/settings', 'settings')->name('web.settings');
     Route::post('/logout', 'logout')->name('web.logout');
 });

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreUserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -62,6 +63,23 @@ class WebController extends Controller
         $user->save();
 
         return redirect()->route('web.users.create')->with('message', 'Cadastro realizado com sucesso!!!');
+    }
+
+    public function edit(int $id)
+    {
+        $user = User::find($id);
+        return Inertia::render('Users/Edit', [
+            'user' => $user
+        ]);
+    }
+
+    public function destroy(int $id)
+    {
+        $user = User::find($id);
+        if ($user) {
+            $user->delete();
+        }
+        return Redirect::route('web.users');
     }
 
     /**

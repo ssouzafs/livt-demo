@@ -5,10 +5,10 @@
         <NavLink href="/" :active="$page.component === 'Home'">Home</NavLink>
       </li>
       <li>
-        <NavLink href="/users" :active="$page.component === 'Users/Index'">Users</NavLink>
+        <NavLink href="/users" :active="$page.component === 'Users/Index'">Usuários</NavLink>
       </li>
       <li>
-        <NavLink href="/settings" :active="$page.component === 'Settings'">Settings</NavLink>
+        <NavLink href="/settings" :active="$page.component === 'Users/Create'">Settings</NavLink>
       </li>
     </ul>
   </nav>
