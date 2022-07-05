@@ -56,6 +56,7 @@ class WebController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
+//        sleep(3);
         $user = new User();
         $user->fill($request->validated());
         $user->save();
