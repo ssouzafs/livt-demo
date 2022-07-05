@@ -22,7 +22,7 @@
 
 <script setup>
   import { ref, watch } from "vue";
-  import _ from "lodash";
+  import debounce from "lodash/debounce";
   import { Inertia } from "@inertiajs/inertia";
   import Paginator from "../../Shareds/Paginator";
   import ListUsers from "../../Shareds/ListUsers";
@@ -34,11 +34,12 @@
   });
   const search = ref(props.filters.search);
 
-  watch(search, _.debounce(() => {
+  watch(search, debounce(() => {
+    console.log('Teste');
     Inertia.get("/users", { search: search.value }, {
       preserveState: true,
       replace: true
     });
-  }, 400));
+  }, 300));
 </script>
 
