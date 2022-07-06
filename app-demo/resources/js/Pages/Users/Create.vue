@@ -16,7 +16,6 @@
         >
           Nome:
         </label>
-        <i class="pi pi-spin pi-spinner text-red-300"></i>
         <input
           id="name"
           ref="inputName"
@@ -27,7 +26,6 @@
           placeholder="Insira o nome..."
           type="text"
         >
-
         <small
           v-if="form.errors.name"
           class="text-red-500"
@@ -57,7 +55,6 @@
           v-html="form.errors.email"
         >
         </small>
-
       </div>
       <div class="mb-6">
         <label

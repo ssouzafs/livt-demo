@@ -31,7 +31,7 @@ class WebController extends Controller
                         ->orWhere('email', 'like', "%{$search}%")
                         ->orWhere('id', "{$search}");
                 })
-                ->paginate(10)
+                ->paginate(5)
                 ->withQueryString()
                 ->through(fn($user) => [
                     'id' => $user->id,

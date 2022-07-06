@@ -20,11 +20,18 @@
 </template>
 
 <script setup>
-  import { computed } from "vue";
+  import { computed, watch } from "vue";
   import { usePage } from "@inertiajs/inertia-vue3";
   import NavBar from "./NavBar";
 
   const user = computed(() => {
     return usePage().props.value.auth.user;
   });
+
+  watch(usePage().props.value.auth.user, (value) => {
+    if(!value) {
+
+      console.log('value');
+    }
+	});
 </script>

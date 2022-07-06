@@ -3,16 +3,14 @@
   <div class="h-screen flex place-items-center">
     <div class="mx-auto p-5 shadow-lg shadow-gray-500/30 rounded-md border min-w-[30%]">
       <form @submit.prevent="submit">
-        <div class="mb-6 mt-4 grid grid-cols-1 place-items-center h-18 text-2xl">
-          <h1 class="font-bold">MY
-            <span class="font-thin">APLICATION</span>
-          </h1>
+        <div class="mb-6 grid grid-cols-1 place-items-center h-18 text-2xl">
+          <h1 class="font-bold">MY<span class="font-thin">APLICATION</span></h1>
         </div>
 
         <div class="my-6">
           <div class="p-float-label">
             <InputText
-              id="email1" v-model="form.email"
+              v-model="form.email"
               :class="form.errors.email ? 'border-red-500 focus:ring focus: ring ring-red-200' : 'border-indigo-500'"
               class="w-full mb-3 outline-none"
               type="text"
@@ -56,8 +54,8 @@
   import { useForm } from "@inertiajs/inertia-vue3";
 
   const form = useForm({
-    email: "",
-    password: ""
+    email: "admin@test.com.br",
+    password: "admin"
   });
 
   const submit = () => {

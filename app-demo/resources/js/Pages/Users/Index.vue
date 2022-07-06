@@ -36,7 +36,6 @@
   const search = ref(props.filters.search);
 
   watch(search, debounce(() => {
-    console.log("Teste");
     Inertia.get("/users", { search: search.value }, {
       preserveState: true,
       replace: true
