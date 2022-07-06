@@ -1,7 +1,7 @@
 import "../css/app.css";
 import { createApp, h } from "vue";
-
 import PrimeVue from "primevue/config";
+
 import Button from "primevue/button";
 import Toast from "primevue/toast";
 import ToastService from "primevue/toastservice";

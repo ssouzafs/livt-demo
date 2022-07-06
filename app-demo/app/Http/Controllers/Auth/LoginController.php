@@ -32,7 +32,9 @@ class LoginController extends Controller
             $request->session()->regenerate();
             return redirect()->intended('/');
         }
-        return back()->onlyInput('email');
+        return back()->withErrors([
+            'email' => 'E-mail informado não confere.',
+        ])->onlyInput('email');
     }
 
     /**

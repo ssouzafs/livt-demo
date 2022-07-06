@@ -52,16 +52,14 @@ class WebController extends Controller
     }
 
     /**
-     * @param Request $request
+     * @param StoreUserRequest $request
      * @return void
      */
     public function store(StoreUserRequest $request)
     {
-//        sleep(3);
         $user = new User();
         $user->fill($request->validated());
         $user->save();
-
         return redirect()->route('web.users.create')->with('message', 'Cadastro realizado com sucesso!!!');
     }
 

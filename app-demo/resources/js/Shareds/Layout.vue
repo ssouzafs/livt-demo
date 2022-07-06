@@ -1,10 +1,12 @@
 <template>
   <section class="p-6 bg-gray-300">
-    <header class="flex justify-between">
-      <div class="flex items-center">
-        <h1 class="font-bold text-lg">My App</h1>
+    <header class="flex justify-between max-w-7xl mx-auto">
+      <div class="flex items-center text-2xl">
+        <Link href="/">
+          <h1 class="font-bold">MY<span class="font-thin">APLICATION</span></h1>
+        </Link>
         <p class="text-sm ml-4">
-          Bem vindo, {{ username }}
+          Bem vindo, {{ user }}
         </p>
       </div>
       <NavBar />
@@ -17,18 +19,12 @@
   </section>
 </template>
 
-<script>
+<script setup>
+  import { computed } from "vue";
+  import { usePage } from "@inertiajs/inertia-vue3";
   import NavBar from "./NavBar";
 
-  export default {
-    name: "Layout",
-    components: {
-      NavBar
-    },
-    computed: {
-      username() {
-        return this.$page.props.auth.user;
-      }
-    }
-  };
+  const user = computed(() => {
+    return usePage().props.value.auth.user;
+  });
 </script>

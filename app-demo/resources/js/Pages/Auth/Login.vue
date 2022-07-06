@@ -1,41 +1,51 @@
 <template>
   <Head title="Login" />
-  <Toast />
-  <div class="h-screen flex items-center">
-    <div class="mx-auto p-7 shadow-lg shadow-gray-500/30 rounded-md border min-w-[30%]">
+  <div class="h-screen flex place-items-center">
+    <div class="mx-auto p-5 shadow-lg shadow-gray-500/30 rounded-md border min-w-[30%]">
       <form @submit.prevent="submit">
-        <label for="email" class="block text-900 font-medium mb-2">E-mail:</label>
-        <InputText
-          id="email1" type="text"
-          class="w-full mb-3 outline-none"
-          :class="form.errors.email ? 'border-red-500 focus:ring focus: ring ring-red-200' : 'border-indigo-500'"
-          v-model="form.email"
-        />
-        <small
-          class="text-red-500"
-          v-if="form.errors.email"
-          v-html="form.errors.email"
-        />
+        <div class="mb-6 mt-4 grid grid-cols-1 place-items-center h-18 text-2xl">
+          <h1 class="font-bold">MY
+            <span class="font-thin">APLICATION</span>
+          </h1>
+        </div>
 
-        <label for="password" class="block text-900 font-medium mt-2">Senha:</label>
-        <InputText
-          id="password"
-          type="password"
-          class="w-full mb-3 text-sm p-2 w-full border rounded-md outline-none"
-          :class="form.errors.password ? 'border-red-500 focus:ring focus: ring ring-red-200' : 'border-indigo-500'"
-          v-model="form.password"
-        />
-        <small
-          class="text-red-500"
-          v-if="form.errors.password"
-          v-html="form.errors.password"
-        />
-
+        <div class="my-6">
+          <div class="p-float-label">
+            <InputText
+              id="email1" v-model="form.email"
+              :class="form.errors.email ? 'border-red-500 focus:ring focus: ring ring-red-200' : 'border-indigo-500'"
+              class="w-full mb-3 outline-none"
+              type="text"
+            />
+            <label class="text-900 font-light" for="Email:">Email:</label>
+          </div>
+          <small
+            v-if="form.errors.email"
+            class="text-red-500"
+            v-html="form.errors.email"
+          />
+        </div>
+        <div class="mt-6">
+          <div class="p-float-label">
+            <InputText
+              id="email1" v-model="form.password"
+              :class="form.errors.password ? 'border-red-500 focus:ring focus:ring ring-red-200' : 'border-indigo-500'"
+              class="w-full mb-3 outline-none"
+              type="password"
+            />
+            <label class="text-900 font-light" for="Email:">Senha:</label>
+          </div>
+          <small
+            v-if="form.errors.password"
+            class="text-red-500"
+            v-html="form.errors.password"
+          />
+        </div>
         <button
-          icon="pi pi-check"
-          class="w-full mt-3 bg-blue-500 text-gray-100 h-10 rounded hover:bg-blue-600"
           :disabled="form.processing"
-        > Entrar
+          class="w-full mt-3 bg-blue-500 text-gray-100 h-10 rounded hover:bg-blue-600"
+        >
+          Entrar
         </button>
       </form>
     </div>
@@ -44,14 +54,6 @@
 
 <script setup>
   import { useForm } from "@inertiajs/inertia-vue3";
-  import { useToast } from "primevue/usetoast";
-
-  const toast = useToast();
-
-  // const action = () => {
-  //   console.log("teste");
-  //   toast.add({ severity: "info", summary: "Infomação", detail: "Mensagem de teste", life: 3000 });
-  // };
 
   const form = useForm({
     email: "",
@@ -59,11 +61,7 @@
   });
 
   const submit = () => {
-    form.post("/login", {
-      onError: () => {
-        toast.add({ severity: "error", summary: "Acesso Negado", detail: "Os dados informados não conferem!", life: 3000 });
-      }
-    });
+    form.post("/login");
   };
 
 </script>

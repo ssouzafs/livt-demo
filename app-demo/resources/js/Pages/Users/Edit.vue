@@ -3,55 +3,58 @@
     <Head>
       <title>Edição de Usuário</title>
     </Head>
-    <HeaderContent>#{{ user.id }} - Edição de Usuário</HeaderContent>
-    <form @submit.prevent="submit" class="max-w-xl mx-auto my-8">
-      <div class="p-3 rounded border border-green-500 text-green-500 font-light mb-3 flex justify-between"
-           v-if="form.recentlySuccessful">
+    <div class="mb-7 border-b border-zinc-500 flex justify-between">
+      <h1 class="font-light text-zinc-600 text-xl ">Edição de Usuário - {{ user.id }}</h1>
+      <Link class="p-2 text-indigo-600 hover:underline text-indigo-500" href="/users/">Ir para listagem</Link>
+    </div>
+    <form class="max-w-xl mx-auto my-8" @submit.prevent="submit">
+      <div v-if="form.recentlySuccessful"
+           class="p-3 rounded border border-green-500 text-green-500 font-light mb-3 flex justify-between">
         <span>{{ $page.props.flash.message }}</span>
         <Link class="hover:font-normal" @click="dismiss">X</Link>
       </div>
       <div class="mb-6">
         <label
-          for="name"
           class="block mb-2 font-light text-sm text-gray-700"
+          for="name"
         >
           Nome:
         </label>
         <input
-          type="text"
-          name="name"
           id="name"
+          v-model="form.name"
           :class="form.errors.name ? 'border-red-500 focus:ring focus: ring ring-red-200' : 'border-indigo-500' "
           class="h-9 text-sm p-2 w-full border rounded-md outline-none"
-          v-model="form.name"
+          name="name"
           placeholder="Insira o nome..."
+          type="text"
         >
         <small
-          class="text-red-500"
           v-if="form.errors.name"
+          class="text-red-500"
           v-html="form.errors.name"
         >
         </small>
       </div>
       <div class="mb-6">
         <label
-          for="email"
           class="block mb-2 font-light text-sm text-gray-700"
+          for="email"
         >
           E-mail:
         </label>
         <input
-          type="text"
-          name="email"
           id="email"
           v-model="form.email"
-          placeholder="Insira seu melhor e-mail..."
           :class="form.errors.email ? 'border-red-500 focus:ring focus: ring ring-red-200' : 'border-indigo-500' "
           class="h-9 text-sm p-2 w-full border rounded-md outline-none"
+          name="email"
+          placeholder="Insira seu melhor e-mail..."
+          type="text"
         >
         <small
-          class="text-red-500"
           v-if="form.errors.email"
+          class="text-red-500"
           v-html="form.errors.email"
         >
         </small>
@@ -59,32 +62,32 @@
       </div>
       <div class="mb-6">
         <label
-          for="password"
           class="block mb-2 font-light text-sm text-gray-700"
+          for="password"
         >
           Senha:
         </label>
         <input
-          type="password"
-          name="password"
           id="password"
           v-model="form.password"
-          placeholder="Insira um senha..."
           :class="form.errors.password ? 'border-red-500 focus:ring focus: ring ring-red-200' : 'border-indigo-500' "
           class="h-9 text-sm p-2 w-full rounded-md outline-none border"
+          name="password"
+          placeholder="Insira um senha..."
+          type="password"
         >
         <small
-          class="text-red-500"
           v-if="form.errors.password"
+          class="text-red-500"
           v-html="form.errors.password"
         >
         </small>
       </div>
       <div class="mb-6 text-end">
         <button
-          type="submit"
-          class="bg-indigo-600 text-white rounded py-2 px-4 hover:bg-indigo-500"
           :disabled="form.processing"
+          class="bg-indigo-600 text-white rounded py-2 px-4 hover:bg-indigo-500"
+          type="submit"
         >
           Cadastrar
         </button>
@@ -96,7 +99,6 @@
 
 <script setup>
   import { useForm } from "@inertiajs/inertia-vue3";
-  import HeaderContent from "../../Shareds/HeaderContent";
 
   const props = defineProps({
     user: Object
