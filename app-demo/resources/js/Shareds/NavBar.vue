@@ -10,19 +10,20 @@
       <li>
         <NavLink href="/settings" :active="$page.component === 'Users/Create'">Settings</NavLink>
       </li>
+      <li>
+        <!--        <NavLink href="/logout" >Sair</NavLink>-->
+        <button type="submit" @click="submit">Sair</button>
+      </li>
     </ul>
   </nav>
 </template>
 
-<script>
-import NavLink from "./NavLink";
+<script setup>
+  import { Inertia } from "@inertiajs/inertia";
+  import NavLink from "./NavLink";
 
-export default {
-  name: "NavBar",
-  components: {
-    NavLink
-  }
-}
+  const submit = () => {
+    Inertia.post("/logout");
+  };
+
 </script>
-<style scoped>
-</style>

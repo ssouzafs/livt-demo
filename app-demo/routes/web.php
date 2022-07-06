@@ -5,6 +5,7 @@ use App\Http\Controllers\WebController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/login', [LoginController::class, 'login'])->name('auth.login');
+Route::post('/login', [LoginController::class, 'authenticate'])->name('auth.authenticate');
 Route::middleware('auth')->group(function () {
 
     Route::controller(WebController::class)->group(function () {
@@ -18,6 +19,6 @@ Route::middleware('auth')->group(function () {
         Route::get('/users/{id}/edit', 'edit')->name('web.users.edit');
 
         Route::get('/settings', 'settings')->name('web.settings');
-        Route::post('/logout', 'logout')->name('web.logout');
     });
+    Route::post('/logout', [LoginController::class, 'logout'])->name('auth.logout');
 });
