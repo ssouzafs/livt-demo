@@ -17,6 +17,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/users/store', 'store')->name('web.users.store');
 
         Route::get('/users/{id}/edit', 'edit')->name('web.users.edit');
+        Route::put('/users/update/{id}', 'update')->name('web.users.update');
 
         Route::get('/settings', 'settings')->name('web.settings');
     });

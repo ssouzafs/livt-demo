@@ -1,6 +1,5 @@
 <template>
   <Layout>
-    <Toast />
     <Head>
       <title>Novo Usuário</title>
     </Head>
@@ -94,47 +93,47 @@
 </template>
 
 <script setup>
-  import { ref, onMounted, watch } from "vue";
-  import { useForm } from "@inertiajs/inertia-vue3";
-  import { usePage } from "@inertiajs/inertia-vue3";
-  import { useToast } from "primevue/usetoast";
+import {ref, onMounted, watch} from "vue";
+import {useForm} from "@inertiajs/inertia-vue3";
+import {usePage} from "@inertiajs/inertia-vue3";
+import {useToast} from "primevue/usetoast";
 
-  const toast = useToast();
-  const inputName = ref(null);
-  let form = useForm({
-    name: "",
-    email: "",
-    password: ""
+const toast = useToast();
+const inputName = ref(null);
+let form = useForm({
+  name: "",
+  email: "",
+  password: ""
+});
+
+let submit = () => {
+  form.post("/users/store", {
+    onSuccess: () => {
+      form.reset();
+      getToastMessageFlash();
+      focusInput(inputName);
+    }
   });
+};
 
-  let submit = () => {
-    form.post("/users/store", {
-      onSuccess: () => {
-        form.reset();
-        getToastMessageFlash();
-        focusInput(inputName);
-      }
-    });
-  };
+function focusInput(inputTemplateRef) {
+  return inputTemplateRef.value.focus();
+}
 
-  function focusInput(inputTemplateRef) {
-    return inputTemplateRef.value.focus();
-  }
-
-  function getToastMessageFlash(
-    message = usePage().props.value.flash.message, typeMessage = "success",
-    titleMessage = "Operação Realizada"
-  ) {
-    toast.add({
-      severity: typeMessage,
-      summary: titleMessage,
-      detail: message,
-      closable: true,
-      life: 3000
-    });
-  }
-
-  onMounted(() => {
-    focusInput(inputName);
+function getToastMessageFlash(
+  message = usePage().props.value.flash.message, typeMessage = "success",
+  titleMessage = "Operação Realizada"
+) {
+  toast.add({
+    severity: typeMessage,
+    summary: titleMessage,
+    detail: message,
+    closable: true,
+    life: 3000
   });
+}
+
+onMounted(() => {
+  focusInput(inputName);
+});
 </script>

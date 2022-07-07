@@ -5,14 +5,9 @@
     </Head>
     <div class="mb-7 border-b border-zinc-500 flex justify-between">
       <h1 class="font-light text-zinc-600 text-xl ">Edição de Usuário - {{ user.id }}</h1>
-      <Link class="p-2 text-indigo-600 hover:underline text-indigo-500" href="/users/">Ir para listagem</Link>
+      <Link class="p-2 text-indigo-600 hover:underline text-indigo-500" href="/users/" v-text="`Ir para Listagem`"/>
     </div>
     <form class="max-w-xl mx-auto my-8" @submit.prevent="submit">
-      <div v-if="form.recentlySuccessful"
-           class="p-3 rounded border border-green-500 text-green-500 font-light mb-3 flex justify-between">
-        <span>{{ $page.props.flash.message }}</span>
-        <Link class="hover:font-normal" @click="dismiss">X</Link>
-      </div>
       <div class="mb-6">
         <label
           class="block mb-2 font-light text-sm text-gray-700"
@@ -48,7 +43,6 @@
           v-model="form.email"
           :class="form.errors.email ? 'border-red-500 focus:ring focus: ring ring-red-200' : 'border-indigo-500' "
           class="h-9 text-sm p-2 w-full border rounded-md outline-none"
-          name="email"
           placeholder="Insira seu melhor e-mail..."
           type="text"
         >
@@ -89,32 +83,47 @@
           class="bg-indigo-600 text-white rounded py-2 px-4 hover:bg-indigo-500"
           type="submit"
         >
-          Cadastrar
+          Salvar Atualização
         </button>
       </div>
-
     </form>
   </Layout>
 </template>
 
 <script setup>
-  import { useForm } from "@inertiajs/inertia-vue3";
+import {useForm, usePage} from "@inertiajs/inertia-vue3";
+import {useToast} from "primevue/usetoast";
 
-  const props = defineProps({
-    user: Object
+const toast = useToast()
+const props = defineProps({
+  user: Object
+});
+
+let form = useForm({
+  id: props.user.id,
+  name: props.user.name,
+  email: props.user.email,
+  password: props.user.password
+});
+
+const submit = () => {
+  form.put(`/users/update/${form.id}`, {
+    onSuccess: () => {
+      getToastMessageFlash()
+    }
   });
 
-  let form = useForm({
-    name: props.user.name,
-    email: props.user.email,
-    password: props.user.password
-  });
-
-  let submit = () => {
-    form.post("/users/store", {
-      onSuccess: () => {
-        form.reset();
-      }
+  function getToastMessageFlash(
+    message = usePage().props.value.flash.message, typeMessage = "success",
+    titleMessage = "Operação Realizada"
+  ) {
+    toast.add({
+      severity: typeMessage,
+      summary: titleMessage,
+      detail: message,
+      closable: true,
+      life: 3000
     });
-  };
+  }
+};
 </script>

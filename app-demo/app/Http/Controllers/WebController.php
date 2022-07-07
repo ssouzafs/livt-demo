@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
@@ -60,10 +62,14 @@ class WebController extends Controller
         $user = new User();
         $user->fill($request->validated());
         $user->save();
-        return redirect()->route('web.users.create')->with('message', 'Cadastro realizado com sucesso!!!');
+        return Redirect::route('web.users.create')->with('message', 'Cadastro realizado com sucesso!!!');
     }
 
-    public function edit(int $id)
+    /**
+     * @param int $id
+     * @return Response
+     */
+    public function edit(int $id): Response
     {
         $user = User::find($id);
         return Inertia::render('Users/Edit', [
@@ -71,6 +77,25 @@ class WebController extends Controller
         ]);
     }
 
+    /**
+     * @param UpdateUserRequest $request
+     * @param int $id
+     * @return RedirectResponse
+     */
+    public function update(UpdateUserRequest $request, int $id)
+    {
+        $user = User::find($id);
+        $user->fill($request->validated());
+        $user->save();
+        return Redirect::route('web.users.edit', [
+            'id' => $user->id
+        ])->with('message', $request->validated());
+    }
+
+    /**
+     * @param int $id
+     * @return RedirectResponse
+     */
     public function destroy(int $id)
     {
         $user = User::find($id);
