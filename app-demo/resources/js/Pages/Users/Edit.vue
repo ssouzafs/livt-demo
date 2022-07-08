@@ -5,9 +5,10 @@
     </Head>
     <div class="mb-7 border-b border-zinc-500 flex justify-between">
       <h1 class="font-light text-zinc-600 text-xl ">Edição de Usuário - {{ user.id }}</h1>
-      <Link class="p-2 text-indigo-600 hover:underline text-indigo-500" href="/users/" v-text="`Ir para Listagem`"/>
+      <Link class="p-2 text-indigo-600 hover:underline text-indigo-500" href="/users/"
+            v-text="`Ir para Listagem`"/>
     </div>
-    <form class="max-w-xl mx-auto my-8" @submit.prevent="submit">
+    <form class="max-w-xl mx-auto my-8" @submit.prevent="update">
       <div class="mb-6">
         <label
           class="block mb-2 font-light text-sm text-gray-700"
@@ -62,12 +63,9 @@
           Senha:
         </label>
         <input
-          id="password"
           v-model="form.password"
           :class="form.errors.password ? 'border-red-500 focus:ring focus: ring ring-red-200' : 'border-indigo-500' "
           class="h-9 text-sm p-2 w-full rounded-md outline-none border"
-          name="password"
-          placeholder="Insira um senha..."
           type="password"
         >
         <small
@@ -99,31 +97,33 @@ const props = defineProps({
   user: Object
 });
 
-let form = useForm({
+const form = useForm({
   id: props.user.id,
   name: props.user.name,
   email: props.user.email,
   password: props.user.password
 });
 
-const submit = () => {
-  form.put(`/users/update/${form.id}`, {
-    onSuccess: () => {
-      getToastMessageFlash()
-    }
-  });
-
-  function getToastMessageFlash(
-    message = usePage().props.value.flash.message, typeMessage = "success",
-    titleMessage = "Operação Realizada"
-  ) {
-    toast.add({
-      severity: typeMessage,
-      summary: titleMessage,
-      detail: message,
-      closable: true,
-      life: 3000
+const update = () => {
+  if (form.isDirty) {
+    form.put(`/users/update/${form.id}`, {
+      onSuccess: () => {
+        getToastMessageFlash()
+      }
     });
   }
 };
+
+function getToastMessageFlash(
+  message = usePage().props.value.flash.message, typeMessage = "success",
+  titleMessage = "Operação Realizada"
+) {
+  toast.add({
+    severity: typeMessage,
+    summary: titleMessage,
+    detail: message,
+    closable: true,
+    life: 3000
+  });
+}
 </script>

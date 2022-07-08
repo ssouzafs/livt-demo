@@ -1,30 +1,23 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserRequest;
-use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Inertia\Response;
 
-class WebController extends Controller
+class UserController extends Controller
 {
     /**
-     * @return Response
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
      */
-    public function home()
-    {
-        return Inertia::render('Home');
-    }
-
-    /**
-     * @return Response
-     */
-    public function users(Request $request)
+    public function index()
     {
         return Inertia::render('Users/Index', [
             'users' => User::query()
@@ -46,7 +39,9 @@ class WebController extends Controller
     }
 
     /**
-     * @return Response
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
      */
     public function create()
     {
@@ -54,6 +49,7 @@ class WebController extends Controller
     }
 
     /**
+     * Store a newly created resource in storage.
      * @param StoreUserRequest $request
      * @return void
      */
@@ -62,14 +58,16 @@ class WebController extends Controller
         $user = new User();
         $user->fill($request->validated());
         $user->save();
-        return Redirect::route('web.users.create')->with('message', 'Cadastro realizado com sucesso!!!');
+        return Redirect::route('users.create')->with('message', 'Cadastro realizado com sucesso!!!');
     }
 
     /**
+     * Show the form for editing the specified resource.
+     *
      * @param int $id
-     * @return Response
+     * @return \Illuminate\Http\Response
      */
-    public function edit(int $id): Response
+    public function edit($id): Response
     {
         $user = User::find($id);
         return Inertia::render('Users/Edit', [
@@ -78,38 +76,34 @@ class WebController extends Controller
     }
 
     /**
-     * @param UpdateUserRequest $request
+     * Update the specified resource in storage.
+     *
+     * @param Request $request
      * @param int $id
-     * @return RedirectResponse
+     * @return \Illuminate\Http\Response
      */
-    public function update(UpdateUserRequest $request, int $id)
+    public function update(Request $request, $id)
     {
         $user = User::find($id);
         $user->fill($request->validated());
         $user->save();
-        return Redirect::route('web.users.edit', [
+        return Redirect::route('users.edit', [
             'id' => $user->id
         ])->with('message', $request->validated());
     }
 
     /**
+     * Remove the specified resource from storage.
+     *
      * @param int $id
-     * @return RedirectResponse
+     * @return \Illuminate\Http\Response
      */
-    public function destroy(int $id)
+    public function destroy($id)
     {
         $user = User::find($id);
         if ($user) {
             $user->delete();
         }
-        return Redirect::route('web.users');
-    }
-
-    /**
-     * @return Response
-     */
-    public function settings()
-    {
-        return Inertia::render('Settings');
+        return Redirect::route('users.index');
     }
 }

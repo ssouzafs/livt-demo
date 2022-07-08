@@ -17,6 +17,22 @@ class LoginController extends Controller
     }
 
     /**
+     * @return \Inertia\Response
+     */
+    public function home()
+    {
+        return Inertia::render('Home');
+    }
+
+    /**
+     * @return \Inertia\Response
+     */
+    public function settings()
+    {
+        return Inertia::render('Settings');
+    }
+
+    /**
      * Handle an authentication attempt.
      *
      * @param Request $request
