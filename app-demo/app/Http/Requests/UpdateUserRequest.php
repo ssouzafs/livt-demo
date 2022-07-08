@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
+use phpDocumentor\Reflection\Types\Nullable;
 
 class UpdateUserRequest extends FormRequest
 {
@@ -32,7 +33,7 @@ class UpdateUserRequest extends FormRequest
                 Rule::unique('users')->ignore($this->id),
                 'max:255'
             ],
-//            'password' => 'sometimes|min:4|max:255'
+            'password' => empty($this->password) ? 'nullable' : 'min:4|max:255'
         ];
     }
 }

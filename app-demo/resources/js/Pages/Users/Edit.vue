@@ -101,14 +101,15 @@ const form = useForm({
   id: props.user.id,
   name: props.user.name,
   email: props.user.email,
-  password: props.user.password
+  password: ''
 });
 
 const update = () => {
   if (form.isDirty) {
-    form.put(`/users/update/${form.id}`, {
+    form.put(`/users/${form.id}`, {
       onSuccess: () => {
-        getToastMessageFlash()
+        form.reset('password');
+        getToastMessageFlash();
       }
     });
   }

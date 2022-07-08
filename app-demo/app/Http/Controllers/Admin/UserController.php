@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -17,7 +18,7 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         return Inertia::render('Users/Index', [
             'users' => User::query()
@@ -64,12 +65,11 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param int $id
+     * @param User $user
      * @return \Illuminate\Http\Response
      */
-    public function edit($id): Response
+    public function edit(User $user): Response
     {
-        $user = User::find($id);
         return Inertia::render('Users/Edit', [
             'user' => $user
         ]);
@@ -78,18 +78,17 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
-     * @param int $id
+     * @param UpdateUserRequest $request
+     * @param User $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateUserRequest $request, User $user)
     {
-        $user = User::find($id);
         $user->fill($request->validated());
         $user->save();
         return Redirect::route('users.edit', [
-            'id' => $user->id
-        ])->with('message', $request->validated());
+            'user' => $user
+        ])->with('message', 'Registro atualizado com sucesso!');
     }
 
     /**

@@ -107,7 +107,7 @@ let form = useForm({
 });
 
 let submit = () => {
-  form.post("/users/store", {
+  form.post("/users", {
     onSuccess: () => {
       form.reset();
       getToastMessageFlash();
