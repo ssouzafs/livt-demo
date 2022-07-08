@@ -99,6 +99,7 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
+        sleep(4);
         $user->delete();
         return Redirect::route('users.index')->with('message', 'Registro foi deletado com sucesso!');
     }

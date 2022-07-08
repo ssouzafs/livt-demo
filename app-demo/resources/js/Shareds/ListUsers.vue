@@ -2,42 +2,42 @@
   <ConfirmDialog></ConfirmDialog>
   <table class="w-full mx-auto table-auto font-light">
     <thead class="justify-between">
-      <tr class="bg-indigo-500">
-        <th class="px-16 py-2">
-          <span class="text-gray-100 font-semibold">ID</span>
-        </th>
-        <th class="px-16 py-2">
-          <span class="text-gray-100 font-semibold">Nome</span>
-        </th>
-        <th class="px-16 py-2">
-          <span class="text-gray-100 font-semibold">Email</span>
-        </th>
-        <th class="px-17 py-2">
-          <span class="text-gray-100 font-semibold">Data de Cadastro</span>
-        </th>
-        <th class="px-16 py-2">
-          <span class="text-gray-100 font-semibold">Ações</span>
-        </th>
-      </tr>
+    <tr class="bg-indigo-500">
+      <th class="px-16 py-2">
+        <span class="text-gray-100 font-semibold">ID</span>
+      </th>
+      <th class="px-16 py-2">
+        <span class="text-gray-100 font-semibold">Nome</span>
+      </th>
+      <th class="px-16 py-2">
+        <span class="text-gray-100 font-semibold">Email</span>
+      </th>
+      <th class="px-17 py-2">
+        <span class="text-gray-100 font-semibold">Data de Cadastro</span>
+      </th>
+      <th class="px-16 py-2">
+        <span class="text-gray-100 font-semibold">Ações</span>
+      </th>
+    </tr>
     </thead>
     <tbody class="bg-gray-200">
-      <tr
-        v-for="(user, index) in users.data"
-        :key="index"
-        class="bg-white border-b-2 border-gray-200">
-        <td class="px-16 py-2 flex flex-row items-center text-zinc-900">
-          {{ user.id }}
-        </td>
-        <td>
-          <span class="text-center ml-2 text-zinc-900">{{ user.name }}</span>
-        </td>
-        <td class="px-16 py-2 text-zinc-900">
-          <span>{{ user.email }}</span>
-        </td>
-        <td class="px-17 py-2 text-zinc-900">
-          <span>{{ user.created_at }}</span>
-        </td>
-        <td class="px-16 py-2 text-zinc-900">
+    <tr
+      v-for="(user, index) in users.data"
+      :key="index"
+      class="bg-white border-b-2 border-gray-200">
+      <td class="px-16 py-2 flex flex-row items-center text-zinc-900">
+        {{ user.id }}
+      </td>
+      <td>
+        <span class="text-center ml-2 text-zinc-900">{{ user.name }}</span>
+      </td>
+      <td class="px-16 py-2 text-zinc-900">
+        <span>{{ user.email }}</span>
+      </td>
+      <td class="px-17 py-2 text-zinc-900">
+        <span>{{ user.created_at }}</span>
+      </td>
+      <td class="px-16 py-2 text-zinc-900">
           <span class="flex gap-4 place-items-center">
             <Button
               class="p-button-outlined p-button-info p-button-sm gap-1"
@@ -48,12 +48,13 @@
             <Button
               class="p-button-outlined p-button-danger p-button-sm gap-1"
               @click.prevent="confirmDelete($event, user.id)">
-              <ph-trash :size="17" />
+              <ph-trash v-if="!inProcessing" />
+               <ph-circle-notch v-if="inProcessing" :size="17" class="animate-spin"/>
               Delete
             </Button>
           </span>
-        </td>
-      </tr>
+      </td>
+    </tr>
     </tbody>
   </table>
   <Paginator :links="users.links" />
@@ -68,26 +69,36 @@
   import { Inertia } from "@inertiajs/inertia";
   import { PhTrash } from "phosphor-vue";
   import { PhNotePencil } from "phosphor-vue";
+  import { ref, onMounted } from "vue";
+  import {PhCircleNotch} from 'phosphor-vue';
 
   defineProps({
-    users: Object,
+    users: Object
   });
   const confirm = useConfirm();
   const toast = useToast();
+  const inProcessing = ref(false);
+
 
   const confirmDelete = (event, id) => {
-    console.log(id);
     confirm.require({
       message: "Deseja realmente excluir esse registro?",
       header: "Confirmar Operação",
+      acceptClass: "p-button-outlined p-button-danger p-button-sm",
       icon: "pi pi-exclamation-triangle",
+
       accept: () => {
+        inProcessing.value = true;
         Inertia.delete(`/users/${id}`, {
           onSuccess: () => {
             showFlashMessage("error");
           },
+          onFinish: () => {
+            inProcessing.value = false;
+            console.log('finish')
+          }
         });
-      },
+      }
     });
   };
 
@@ -101,7 +112,7 @@
       summary: titleMessage,
       detail: message,
       closable: true,
-      life: 3000,
+      life: 3000
     });
   }
 
