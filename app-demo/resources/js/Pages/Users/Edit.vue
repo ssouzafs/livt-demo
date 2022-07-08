@@ -109,13 +109,13 @@ const update = () => {
     form.put(`/users/${form.id}`, {
       onSuccess: () => {
         form.reset('password');
-        getToastMessageFlash();
+        showFlashMessage();
       }
     });
   }
 };
 
-function getToastMessageFlash(
+function showFlashMessage(
   message = usePage().props.value.flash.message, typeMessage = "success",
   titleMessage = "Operação Realizada"
 ) {

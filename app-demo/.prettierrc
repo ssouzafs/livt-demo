@@ -1,6 +1,6 @@
 {
-  "singleQuote": false,
   "bracketSpacing": true,
   "vueIndentScriptAndStyle": true,
-  "bracketSameLine": true
+  "bracketSameLine": true,
+  "tabWidth": 2
 }
