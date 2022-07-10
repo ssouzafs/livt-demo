@@ -40,18 +40,22 @@ class LoginController extends Controller
      */
     public function authenticate(Request $request)
     {
-        $credentials = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required'],
-        ]);
+        $credentials = $request->only(['email', 'password']);
+
+        if (in_array('', $credentials)) {
+            return back()->withErrors([
+                'data' => 'Oops! Preencha todos os campos.',
+            ]);
+        }
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->intended('/');
+            return redirect()->intended(route('auth.login.home'));
         }
+
         return back()->withErrors([
-            'email' => 'E-mail informado não confere.',
-        ])->onlyInput('email');
+            'data' => 'Oops! As credenciais informadas não conferem.',
+        ]);
     }
 
     /**

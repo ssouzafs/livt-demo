@@ -9,7 +9,7 @@ import ConfirmationService from "primevue/confirmationservice";
 import InputText from "primevue/inputtext";
 import "primevue/resources/themes/saga-blue/theme.css";
 import "primevue/resources/primevue.min.css";
-import "primeicons/primeicons.css";
+import 'primeicons/primeicons.css';
 import { createInertiaApp, Link, Head } from "@inertiajs/inertia-vue3";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import Layout from "./Shareds/Layout";

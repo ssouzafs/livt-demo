@@ -8,7 +8,7 @@
       <Link
         class="p-2 text-indigo-600 hover:underline text-indigo-500"
         href="/users/"
-        >Ir para listagem
+      >Ir para listagem
       </Link>
     </div>
     <form class="max-w-xl mx-auto my-8" @submit.prevent="submit">
@@ -28,7 +28,7 @@
           class="h-9 text-sm p-2 w-full border rounded-md outline-none"
           name="name"
           placeholder="Insira o nome..."
-          type="text" />
+          type="text"/>
         <small
           v-if="form.errors.name"
           class="text-red-500"
@@ -50,7 +50,7 @@
           class="h-9 text-sm p-2 w-full border rounded-md outline-none"
           name="email"
           placeholder="Insira seu melhor e-mail..."
-          type="text" />
+          type="text"/>
         <small
           v-if="form.errors.email"
           class="text-red-500"
@@ -74,7 +74,7 @@
           class="h-9 text-sm p-2 w-full rounded-md outline-none border"
           name="password"
           placeholder="Insira um senha..."
-          type="password" />
+          type="password"/>
         <small
           v-if="form.errors.password"
           class="text-red-500"
@@ -95,48 +95,48 @@
 </template>
 
 <script setup>
-  import { ref, onMounted, watch } from "vue";
-  import { useForm } from "@inertiajs/inertia-vue3";
-  import { usePage } from "@inertiajs/inertia-vue3";
-  import { useToast } from "primevue/usetoast";
+import {ref, onMounted} from "vue";
+import {useForm} from "@inertiajs/inertia-vue3";
+import {usePage} from "@inertiajs/inertia-vue3";
+import {useToast} from "primevue/usetoast";
 
-  const toast = useToast();
-  const inputName = ref(null);
-  let form = useForm({
-    name: "",
-    email: "",
-    password: "",
+const toast = useToast();
+const inputName = ref(null);
+let form = useForm({
+  name: "",
+  email: "",
+  password: "",
+});
+
+let submit = () => {
+  form.post("/users", {
+    onSuccess: () => {
+      form.reset();
+      showFlashMessage();
+      focusInput(inputName);
+    },
   });
+};
 
-  let submit = () => {
-    form.post("/users", {
-      onSuccess: () => {
-        form.reset();
-        showFlashMessage();
-        focusInput(inputName);
-      },
-    });
-  };
-
-  function focusInput(inputTemplateRef) {
-    return inputTemplateRef.value.focus();
-  }
-
-  function showFlashMessage(
-    typeMessage = "success",
-    message = usePage().props.value.flash.message,
-    titleMessage = "Operação Realizada"
-  ) {
-    toast.add({
-      severity: typeMessage,
-      summary: titleMessage,
-      detail: message,
-      closable: true,
-      life: 3000,
-    });
-  }
-
-  onMounted(() => {
-    focusInput(inputName);
+function showFlashMessage(
+  typeMessage = "success",
+  message = usePage().props.value.flash.message,
+  titleMessage = "Operação Realizada"
+) {
+  toast.add({
+    severity: typeMessage,
+    summary: titleMessage,
+    detail: message,
+    closable: true,
+    life: 3000,
   });
+}
+
+onMounted(() => {
+  focusInput(inputName);
+});
+
+function focusInput(inputTemplateRef) {
+  return inputTemplateRef.value.focus();
+}
 </script>

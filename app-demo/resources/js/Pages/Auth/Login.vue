@@ -1,5 +1,6 @@
 <template>
   <Head title="Login"/>
+  <Toast></Toast>
   <div class="h-screen flex place-items-center">
     <div class="mx-auto p-5 shadow-lg shadow-gray-500/30 rounded-md border min-w-[30%]">
       <form @submit.prevent="submit">
@@ -12,7 +13,7 @@
               v-model="form.email"
               :class="form.errors.email ? 'border-red-500 focus: ring ring-red-200' : 'border-indigo-500'"
               class="w-full mb-3 outline-none"
-              type="text"
+              type="email"
             />
             <label class="text-900 font-light flex items-center gap-1" for="email:">
               <ph-envelope :size="19"/>
@@ -64,7 +65,9 @@ import {PhEnvelope} from 'phosphor-vue';
 import {PhLockKey} from 'phosphor-vue';
 import {PhSignIn} from 'phosphor-vue';
 import {PhCircleNotch} from 'phosphor-vue';
+import {useToast} from "primevue/usetoast";
 
+const toast = useToast();
 const form = useForm({
   email: "admin@test.com.br",
   password: "admin"
@@ -73,8 +76,27 @@ const form = useForm({
 const setValueButton = computed(() => {
   return form.processing ? 'Autenticando...' : 'Entrar'
 })
+
 const submit = () => {
-  form.post("/login");
+  form.post("/login", {
+    onError: () => {
+      showFlashMessage('error', form.errors.data, 'Falha na Autenticação')
+    }
+  });
 };
+
+function showFlashMessage(
+  typeMessage,
+  message,
+  titleMessage = "Operação Realizada"
+) {
+  toast.add({
+    severity: typeMessage,
+    summary: titleMessage,
+    detail: message,
+    closable: true,
+    life: 3000,
+  });
+}
 
 </script>

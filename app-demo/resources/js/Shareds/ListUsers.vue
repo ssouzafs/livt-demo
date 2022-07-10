@@ -41,15 +41,16 @@
           <span class="flex gap-4 place-items-center">
             <Button
               class="p-button-outlined p-button-info p-button-sm gap-1"
-              @click.prevent="edit(user.id)">
-              <ph-note-pencil :size="17" />
+              @click.prevent="edit(user.id)"
+            >
+              <ph-note-pencil :size="17"/>
               Editar
             </Button>
             <Button
               class="p-button-outlined p-button-danger p-button-sm gap-1"
-              @click.prevent="confirmDelete($event, user.id)">
-              <ph-trash v-if="!inProcessing" />
-               <ph-circle-notch v-if="inProcessing" :size="17" class="animate-spin"/>
+              @click.prevent="confirmDelete($event, user.id)"
+            >
+              <ph-trash/>
               Delete
             </Button>
           </span>
@@ -57,66 +58,60 @@
     </tr>
     </tbody>
   </table>
-  <Paginator :links="users.links" />
+  <Paginator :links="users.links"/>
 </template>
 
 <script setup>
-  import Paginator from "../Shareds/Paginator.vue";
-  import { useConfirm } from "primevue/useconfirm";
-  import ConfirmDialog from "primevue/confirmdialog";
-  import { useToast } from "primevue/usetoast";
-  import { usePage } from "@inertiajs/inertia-vue3";
-  import { Inertia } from "@inertiajs/inertia";
-  import { PhTrash } from "phosphor-vue";
-  import { PhNotePencil } from "phosphor-vue";
-  import { ref, onMounted } from "vue";
-  import {PhCircleNotch} from 'phosphor-vue';
+import Paginator from "../Shareds/Paginator.vue";
+import {useConfirm} from "primevue/useconfirm";
+import ConfirmDialog from "primevue/confirmdialog";
+import {useToast} from "primevue/usetoast";
+import {usePage} from "@inertiajs/inertia-vue3";
+import {Inertia} from "@inertiajs/inertia";
+import {PhTrash} from "phosphor-vue";
+import {PhNotePencil} from "phosphor-vue";
+import {ref, onMounted} from "vue";
+import {PhCircleNotch} from 'phosphor-vue';
 
-  defineProps({
-    users: Object
+defineProps({
+  users: Object
+});
+const confirm = useConfirm();
+const toast = useToast();
+
+
+const confirmDelete = (event, id) => {
+  confirm.require({
+    message: "Deseja realmente excluir esse registro?",
+    header: "Confirmar Operação",
+    acceptClass: "p-button-outlined p-button-danger p-button-sm",
+    icon: "pi pi-exclamation-triangle",
+
+    accept: () => {
+      Inertia.delete(`/users/${id}`, {
+        onSuccess: () => {
+          showFlashMessage();
+        },
+      });
+    }
   });
-  const confirm = useConfirm();
-  const toast = useToast();
-  const inProcessing = ref(false);
+};
 
+function showFlashMessage(
+  typeMessage = "success",
+  titleMessage = "Operação Realizada",
+  message = usePage().props.value.flash.message
+) {
+  toast.add({
+    severity: typeMessage,
+    summary: titleMessage,
+    detail: message,
+    closable: true,
+    life: 3000,
+  });
+}
 
-  const confirmDelete = (event, id) => {
-    confirm.require({
-      message: "Deseja realmente excluir esse registro?",
-      header: "Confirmar Operação",
-      acceptClass: "p-button-outlined p-button-danger p-button-sm",
-      icon: "pi pi-exclamation-triangle",
-
-      accept: () => {
-        inProcessing.value = true;
-        Inertia.delete(`/users/${id}`, {
-          onSuccess: () => {
-            showFlashMessage("error");
-          },
-          onFinish: () => {
-            inProcessing.value = false;
-            console.log('finish')
-          }
-        });
-      }
-    });
-  };
-
-  function showFlashMessage(
-    typeMessage = "success",
-    titleMessage = "Operação Realizada",
-    message = usePage().props.value.flash.message
-  ) {
-    toast.add({
-      severity: typeMessage,
-      summary: titleMessage,
-      detail: message,
-      closable: true,
-      life: 3000
-    });
-  }
-
-  const edit = (id) => {
-    Inertia.get(`/users/${id}/edit`);
-  };
+const edit = (id) => {
+  Inertia.get(`/users/${id}/edit`);
+};
 </script>
