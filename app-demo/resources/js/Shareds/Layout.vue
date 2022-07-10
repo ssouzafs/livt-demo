@@ -1,27 +1,29 @@
 <template>
   <section class="p-6 bg-gray-300">
-    <Toast/>
+    <Toast />
     <header class="flex justify-between max-w-7xl mx-auto">
       <div class="flex items-center text-2xl">
         <Link href="/">
-          <h1 class="font-bold">MY<span class="font-thin">APLICATION</span></h1>
+          <h1 class="font-bold">
+            MY<span class="font-thin">APLICATION</span>
+          </h1>
         </Link>
         <p class="text-sm ml-4">
           Bem vindo, {{ user }}
         </p>
       </div>
-      <NavBar/>
+      <NavBar />
     </header>
   </section>
   <section class="p-6">
     <div class="max-w-7xl mx-auto p-5 shadow-lg shadow-gray-500/30 rounded-md border">
-      <slot/>
+      <slot />
     </div>
   </section>
 </template>
 
 <script setup>
-import {computed, watch} from "vue";
+import {computed} from "vue";
 import {usePage} from "@inertiajs/inertia-vue3";
 import NavBar from "./NavBar";
 
